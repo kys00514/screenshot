@@ -1,6 +1,8 @@
 package com.example.screenshotfinal;
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
@@ -19,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,6 +48,17 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer.start();
             }
         });
+        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+
+        // Get recent tasks
+        int maxRecentTasks = 5;
+        List<ActivityManager.RecentTaskInfo> recentTasks = activityManager.getRecentTasks(maxRecentTasks, ActivityManager.RECENT_IGNORE_UNAVAILABLE);
+
+        // Process the recent tasks
+        for (ActivityManager.RecentTaskInfo taskInfo : recentTasks) {
+            // Do something with taskInfo
+            Log.d("asdff", String.valueOf(taskInfo));
+        }
     }
 
     protected File screenshot(View view, String filename) {
